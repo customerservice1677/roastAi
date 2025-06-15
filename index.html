@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Class Roast AI 🔥</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e2f;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    h1 {
+      color: #ff4c4c;
+      margin-bottom: 1rem;
+    }
+    .form-container {
+      background: #2c2c3d;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 76, 76, 0.3);
+      max-width: 450px;
+      width: 100%;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      margin-top: 1rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.7rem 1.5rem;
+      background: #ff4c4c;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      width: 100%;
+    }
+    button:hover {
+      background: #e03e3e;
+    }
+    .roast-output {
+      margin-top: 2rem;
+      background: #383850;
+      padding: 1rem;
+      border-radius: 10px;
+      font-style: italic;
+      min-height: 80px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Class Roast AI 🔥</h1>
+
+  <div class="form-container">
+    <label for="name">Name</label>
+    <input type="text" id="name" placeholder="Enter their name" />
+
+    <label for="hairColor">Hair Color</label>
+    <select id="hairColor">
+      <option>Black</option>
+      <option>Brown</option>
+      <option>Blonde</option>
+      <option>Ginger</option>
+      <option>Dyed Blue</option>
+      <option>Bald</option>
+      <option>Wavy</option>
+    </select>
+
+    <label for="hairType">Hair Type</label>
+    <select id="hairType">
+      <option>Straight</option>
+      <option>Curly</option>
+      <option>Frizzy</option>
+      <option>Gelled</option>
+      <option>Messy</option>
+      <option>Wavy</option>
+    </select>
+
+    <label for="bodyType">Body Type</label>
+    <select id="bodyType">
+      <option>Skinny</option>
+      <option>Chubby</option>
+      <option>Muscular</option>
+      <option>Short</option>
+      <option>Tall</option>
+    </select>
+
+    <label for="vibe">Vibe</label>
+    <select id="vibe">
+      <option>Trying to act cool</option>
+      <option>Always tired</option>
+      <option>Always eating</option>
+      <option>Talks too much</option>
+      <option>Always on phone</option>
+    </select>
+
+    <button id="roastBtn">Roast Me 🔥</button>
+
+    <div class="roast-output" id="roastOutput">Your roast will appear here.</div>
+  </div>
+
+  <script>
+    // Roasts arrays for each category with 10+ examples each (you can expand this to 50+ easily)
+    const roasts = {
+      hairColor: {
+        Black: [
+          "Black hair like the void where their personality should be.",
+          "Their hair is so black, it swallows light like their jokes swallow hope.",
+          "Black hair so dull, even night hates it.",
+          "They've got hair darker than their future prospects.",
+          "Hair blacker than their sense of humor.",
+          "Their hair is a black hole of fun.",
+          "Black hair that screams ‘I lost the personality lottery.’",
+          "Their hair’s so black, it’s suspiciously shady.",
+          "Black hair hiding an even darker attitude.",
+          "So black, it could swallow your hopes and dreams.",
+        ],
+        Brown: [
+          "Brown hair so basic, it’s the default setting of boredom.",
+          "They call it brown, I call it ‘yawn.’",
+          "Brown hair that screams ‘I peaked in middle school.’",
+          "Brown hair as exciting as watching paint dry.",
+          "Their hair is brown, but their ideas are even duller.",
+          "So brown, they blend into the background of life.",
+          "Hair as brown as their sense of adventure — nonexistent.",
+          "Brown hair but zero flavor.",
+          "Brown like stale coffee and expired dreams.",
+          "Brown hair that could use a personality upgrade.",
+        ],
+        Blonde: [
+          "Blonder than a jar of mayo in a snowstorm.",
+          "If intelligence was hair color, they'd still be blonde.",
+          "Blonde hair so bright, it blinds common sense.",
+          "They prove blondes don't always have more fun.",
+          "Blonde hair but a dark sense of failure.",
+          "Blonde like they read a book once — a coloring book.",
+          "Hair so blonde, it’s basically a light bulb.",
+          "Blonde hair that’s a warning sign for bad decisions.",
+          "Their blonde locks hide a brown streak of laziness.",
+          "Blonde but their brain cells are on vacation.",
+        ],
+        Ginger: [
+          "Ginger hair so bright, it’s the sun’s jealous sibling.",
+          "Ginger hair that burns hotter than their social skills.",
+          "They’re a walking, talking caution sign with ginger hair.",
+          "Ginger hair but zero spice in personality.",
+          "Hair redder than their failed jokes.",
+          "Ginger locks hiding a soul on fire — unfortunately, it’s just awkwardness.",
+          "Red hair that screams ‘notice me!’ but no one does.",
+          "Ginger hair so fiery, it singes good vibes away.",
+          "They’ve got more ginger than guts.",
+          "Ginger hair with the warmth of an ice cube.",
+        ],
+        "Dyed Blue": [
+          "Blue hair that screams midlife crisis at 16.",
+          "Dyed blue like they dipped their brain in a paint bucket.",
+          "Blue hair but no clue what’s going on.",
+          "Hair bluer than their chances at popularity.",
+          "Blue hair that’s trying way too hard.",
+          "Dyed blue but personality still grayscale.",
+          "Blue locks hiding a sea of awkwardness.",
+          "Blue hair so cold, it freezes the room’s mood.",
+          "Hair dyed blue but the jokes are still red-flagged.",
+          "Blue hair, zero clue, 100% cringe.",
+        ],
+        Bald: [
+          "Bald and bold — mostly just bald though.",
+          "Their head shines brighter than their future.",
+          "Bald like they gave up halfway through life.",
+          "No hair, no flair, no care.",
+          "Bald head but still losing the race.",
+          "Hairless but not fearless — definitely clueless.",
+          "Bald like a cue ball with less charisma.",
+          "No hair, no shame, just plain pain.",
+          "Bald head that’s smoother than their excuses.",
+          "Bald and baffled by basic social cues.",
+        ],
+        Wavy: [
+          "Wavy hair like a rollercoaster with no safety rails.",
+          "Their waves crash harder than their self-esteem.",
+          "Wavy hair that’s as confused as their life choices.",
+          "Waves so wild, they need a GPS.",
+          "Wavy hair hiding waves of awkwardness.",
+          "Their hair's got more ups and downs than their mood.",
+          "Wavy locks that look like a tangled mess of bad decisions.",
+          "Waves that confuse even the shampoo bottle.",
+          "Wavy hair that’s always one bad day away from disaster.",
+          "Their wavy hair matches their unpredictable personality.",
+        ],
+      },
+
+      hairType: {
+        Straight: [
+          "Hair so straight, it’s as boring as their stories.",
+          "Straight hair but their jokes curve downward.",
+          "Their straight hair has more direction than their life.",
+          "Straight and narrow — like their humor.",
+          "Hair straight as their attempts to be cool.",
+          "Straight hair but twisted thoughts.",
+          "Their hair's so straight, it could use a detour.",
+          "Straight locks but crooked intentions.",
+          "Hair so straight, it screams ‘I’m basic.’",
+          "Straight hair with zero personality twists.",
+        ],
+        Curly: [
+          "Curly like they stuck a fork in an outlet for fun.",
+          "Curly hair so wild, it needs its own leash.",
+          "Curls that look like confused springs.",
+          "Curly hair that’s more tangled than their excuses.",
+          "Their curls have more bounce than their confidence.",
+          "Curly locks hiding a mess of insecurities.",
+          "Hair curls more than their sense of responsibility.",
+          "Curly hair that’s a knotty disaster.",
+          "Their curls are wilder than their social skills.",
+          "Curly hair but zero style points.",
+        ],
+        Frizzy: [
+          "Frizzier than their attempts to fit in.",
+          "Frizzy hair that looks like a static shock.",
+          "Their hair’s frizzier than their future.",
+          "Frizz so fierce it scares away friends.",
+          "Hair so frizzy, it’s got a life of its own.",
+          "Frizz hiding a storm of bad decisions.",
+          "Their frizz is a rebellion against good taste.",
+          "Hair frizzier than their excuses.",
+          "Frizzy hair that’s the definition of chaos.",
+          "They’ve got more frizz than a bad hair day festival.",
+        ],
+        Gelled: [
+          "Gelled hair stuck in 2005 and so is their personality.",
+          "Hair so gelled it could hold up a building.",
+          "Gelled like they spent more time on hair than brain.",
+          "Their gelled hair’s the only thing holding their confidence up.",
+          "Hair gel thicker than their excuses.",
+          "Gelled hair with zero chill.",
+          "Their gelled hair screams ‘I peaked in high school.’",
+          "Gelled locks but slippery character.",
+          "Hair so gelled, it’s practically a helmet.",
+          "Gelled hair hiding a frozen personality.",
+        ],
+        Messy: [
+          "Messier than their life decisions.",
+          "Messy hair that matches their chaotic mind.",
+          "Their hair’s so messy, even birds avoid it.",
+          "Messy locks hiding an even messier personality.",
+          "Hair messier than their excuses.",
+          "Messy hair with zero effort — that’s their motto.",
+          "They have more mess on their head than in their brain.",
+          "Messy hair that screams ‘I give up.’",
+          "Hair so messy, it’s a hazard zone.",
+          "Their messy hair reflects their life in shambles.",
+        ],
+        Wavy: [
+          "Wavy hair like a confused ocean.",
+          "Wavy locks that don’t know if they want to be straight or curly.",
+          "Their waves have more mood swings than a soap opera.",
+          "Wavy hair that’s never quite decided.",
+          "Hair wavy like their excuses for being late.",
+          "Wavy locks hiding a turbulent personality.",
+          "Their hair waves more than their commitment.",
+          "Wavy hair that’s mostly just lazy curls.",
+          "Hair so wavy, it could surf the drama.",
+          "Their wavy hair matches their wishy-washy attitude.",
+        ],
+      },
+
+      bodyType: {
+        Skinny: [
+          "Skinny like they’re a walking stick figure.",
+          "So skinny, even shadows avoid them.",
+          "Skinny enough to disappear in a crowd, unfortunately.",
+          "Their skinny frame can’t carry the weight of their ego.",
+          "Skinny like they’ve been running from responsibility.",
+          "So skinny, they could slip through a crack in reality.",
+          "Skinny body, thick layers of awkwardness.",
+          "Their skinny legs look like matchsticks on strike.",
+          "Skinny like a twig trying to play basketball.",
+          "They’re so skinny, they make noodles jealous.",
+        ],
+        Chubby: [
+          "Chubby like a stress ball that never got released.",
+          "They walk like gravity owes them money.",
+          "Chubby but their ego’s even bigger.",
+          "Their chubby cheeks hide a lifetime supply of snacks.",
+          "Chubby and proud — of their food choices.",
+          "Their belly’s so big, it has its own zip code.",
+          "Chubby like a teddy bear with no cuddles.",
+          "They got more fluff than a pillow store.",
+          "Chubby but zero chill on the treadmill.",
+          "Their chubbiness is the only thing consistent.",
+        ],
+        Muscular: [
+          "Muscular but their brain needs some reps.",
+          "Muscles big but brain cells small.",
+          "Muscular like they lift more excuses than weights.",
+          "Strong on the outside, weak on the inside.",
+          "Muscles so big, they block their common sense.",
+          "Muscular but zero strength in conversations.",
+          "They flex muscles harder than their social skills.",
+          "Muscular but their personality’s a lightweight.",
+          "Muscles that scream ‘I skip leg day… and brain day.’",
+          "Muscular but emotionally fragile.",
+        ],
+        Short: [
+          "Short enough to be the reason for limbo contests.",
+          "Their height’s shorter than their attention span.",
+          "Short but their ego is skyscraper tall.",
+          "Short like a fun-sized candy bar — disappointing.",
+          "They’re so short, they need a ladder for self-confidence.",
+          "Short but loud — unfortunately mostly annoying.",
+          "Their height is inversely proportional to their maturity.",
+          "Short legs, big problems.",
+          "They’re vertically challenged and socially awkward.",
+          "Short but their presence is mostly overlooked.",
+        ],
+        Tall: [
+          "Tall like they’re compensating for something.",
+          "Their height is all they’ve got going for them.",
+          "Tall but their personality’s a tiny dot.",
+          "Tall enough to reach the top shelf of awkwardness.",
+          "They’re a giant in size but a dwarf in wit.",
+          "Tall but their jokes fall flat.",
+          "Their height towers over their social skills — in a bad way.",
+          "Tall but emotionally short.",
+          "They’re so tall, they bump their head on reality.",
+          "Tall but no clue how to act like a normal human.",
+        ],
+      },
+
+      vibe: {
+        "Trying to act cool": [
+          "Trying so hard to act cool, they’re practically frozen.",
+          "Their ‘cool’ vibe melts faster than ice cream in the sun.",
+          "Trying to act cool but failing spectacularly.",
+          "Coolness called; it wants its dignity back.",
+          "Trying to be chill but end up looking like a wilted flower.",
+          "Their ‘cool’ is more like lukewarm disappointment.",
+          "They try to be smooth, but it’s more like slippery soap.",
+          "Trying to act cool but falling on their face.",
+          "Their ‘cool’ vibe is actually a hot mess.",
+          "Trying to be the ice cube but just wet the floor.",
+        ],
+        "Always tired": [
+          "So tired, they could fall asleep mid-roast.",
+          "Always tired, like their brain's on permanent snooze.",
+          "They’re the human version of a Monday morning.",
+          "Always tired, never wired — just expired.",
+          "Their energy levels are a meme.",
+          "So tired, even coffee gave up on them.",
+          "They yawn like it’s their full-time job.",
+          "Always tired but never productive.",
+          "Their tired vibe makes sleeping an extreme sport.",
+          "So tired, their spirit animal is a sloth.",
+        ],
+        "Always eating": [
+          "Always eating like food’s the meaning of life.",
+          "Their snack game is stronger than their social skills.",
+          "Eating more than they talk — and that’s sad.",
+          "Always eating but starving for personality.",
+          "Their mouth’s busier than their brain.",
+          "Always eating but no taste for style.",
+          "They treat food like it’s a competition.",
+          "Eating like the world’s ending tomorrow.",
+          "Their stomach’s louder than their thoughts.",
+          "Always eating but zero flavor in life.",
+        ],
+        "Talks too much": [
+          "Talks so much, they wear out their voice before lunch.",
+          "Their mouth has more miles than a racecar.",
+          "They talk so much, even echo gets tired.",
+          "Words come out faster than their brain can keep up.",
+          "Talks too much but says nothing worth hearing.",
+          "Their chatter could fill a stadium.",
+          "Talks so much, even their shadow leaves.",
+          "They speak in a language called ‘Too Much.’",
+          "Words are cheap, but theirs are bankrupt.",
+          "Talks nonstop like it’s an Olympic sport.",
+        ],
+        "Always on phone": [
+          "Always on their phone, but never on point.",
+          "Their phone battery lasts longer than their attention span.",
+          "They scroll so much, their thumbs have calluses.",
+          "Always texting but never responding to reality.",
+          "Phone glued to their hand, personality nowhere to be found.",
+          "Their social life lives in the phone, not in real life.",
+          "Always on phone, never on time.",
+          "They know their phone’s contacts better than people’s names.",
+          "Their phone’s their best friend — unfortunately.",
+          "Always on phone, missing out on everything else.",
+        ],
+      }
+    };
+
+    // Utility function: pick random from an array
+    function pickRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Main roast generation function
+    function generateRoast() {
+      const name = document.getElementById('name').value.trim() || "This person";
+      const hairColor = document.getElementById('hairColor').value;
+      const hairType = document.getElementById('hairType').value;
+      const bodyType = document.getElementById('bodyType').value;
+      const vibe = document.getElementById('vibe').value;
+
+      // Pick one roast from each category
+      const hairColorRoast = pickRandom(roasts.hairColor[hairColor]);
+      const hairTypeRoast = pickRandom(roasts.hairType[hairType]);
+      const bodyTypeRoast = pickRandom(roasts.bodyType[bodyType]);
+      const vibeRoast = pickRandom(roasts.vibe[vibe]);
+
+      // Combine roasts with the name
+      const fullRoast = `${name}, listen up:\n\n` +
+                        `${hairColorRoast}\n` +
+                        `${hairTypeRoast}\n` +
+                        `${bodyTypeRoast}\n` +
+                        `${vibeRoast}`;
+
+      // Show the roast
+      document.getElementById('roastOutput').textContent = fullRoast;
+    }
+
+    // Add event listener to the button
+    document.getElementById('roastBtn').addEventListener('click', generateRoast);
+  </script>
+
+</body>
+</html>
